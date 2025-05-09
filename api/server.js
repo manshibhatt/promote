@@ -33,8 +33,9 @@ app.use(cookieParser());
 
 
 app.use(cors({
-  origin: "http://localhost:5173", // Change this to your frontend URL
-  credentials: true // Allow cookies & authorization headers
+  origin: "https://fronend-t.onrender.com", 
+  // origin: "http://localhost:5173", 
+  credentials: true 
 }));
  
 app.use("/api/auth", authRoute); 

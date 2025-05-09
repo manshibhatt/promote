@@ -3,7 +3,8 @@ import { Server } from "socket.io";
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://fronend-t.onrender.com",
+    // origin: "http://localhost:5173",
   },
 });
 
