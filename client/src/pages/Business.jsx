@@ -51,7 +51,7 @@ export default function VerifyBusiness() {
         console.log(formData)
         const res= await newRequest.post("/business/",formData)
         // console.log(res)
-        navigate(`/profile/${currentUser._id}`);
+        navigate(`/profile/${currentuser?._id}`);
       }catch(err){
         console.log(err);
       }

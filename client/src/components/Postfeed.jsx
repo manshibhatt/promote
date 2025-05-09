@@ -11,7 +11,7 @@
 
 //   const { currentUser } = useContext(AuthContext);
 
-//   const userId = currentUser._id; 
+//   const userId = currentuser?._id; 
   
 
 //   // useEffect(() => {
@@ -202,7 +202,7 @@ export default function PostFeed({ posts, onToggleLike }) {
 
   const { currentUser } = useContext(AuthContext);
 
-  const userId = currentUser._id; 
+  const userId = currentuser?._id; 
   
 
   // useEffect(() => {

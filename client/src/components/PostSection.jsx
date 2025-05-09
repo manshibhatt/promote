@@ -10,7 +10,7 @@ export default function PostSection({ user, business, isOwnProfile, isVerified }
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await newRequest.get(`/posts/business/${user._id}`);
+        const res = await newRequest.get(`/posts/business/${user?._id}`);
         setPosts(res.data);
       } catch (err) {
         console.error('Failed to fetch posts:', err);

@@ -14,9 +14,9 @@ export default function MessageList() {
     const fetchContacts = async () => {
       if (!currentUser?._id) return;
       try {
-        const res = await newRequest.get(`/conversations/${currentUser._id}`);
+        const res = await newRequest.get(`/conversations/${currentuser?._id}`);
         const receiverIds = res.data.map((conv) =>
-          conv.members.find((id) => id !== currentUser._id)
+          conv.members.find((id) => id !== currentuser?._id)
         );
 
         const userPromises = receiverIds.map((id) =>
@@ -69,8 +69,8 @@ export default function MessageList() {
         <div className="absolute mt-2 w-full max-w-md bg-white shadow-lg rounded-lg z-50 max-h-64 overflow-y-auto">
           {searchResults.map((user) => (
             <div
-              key={user._id}
-              onClick={() => goToProfile(user._id)}
+              key={user?._id}
+              onClick={() => goToProfile(user?._id)}
               className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
             >
               <img
@@ -89,8 +89,8 @@ export default function MessageList() {
         {contacts.length > 0 ? (
           contacts.map((user) => (
             <div
-              key={user._id}
-              onClick={() => goToChat(user._id)}
+              key={user?._id}
+              onClick={() => goToChat(user?._id)}
               className="flex items-center p-3 rounded-lg border hover:shadow-md transition-all cursor-pointer"
             >
               <img

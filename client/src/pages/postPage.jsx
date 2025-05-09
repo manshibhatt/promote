@@ -18,14 +18,14 @@ export default function CreatePost() {
           console.log("click")
           console.log(user)
           const response= await newRequest.post("/posts/",{
-            userId:user._id,
+            userId:user?._id,
             description,
             tags,
             image:imageUrl,
             location
           }) 
           console.log(response.data);
-          navigate(`/profile/${user._id}`);
+          navigate(`/profile/${user?._id}`);
 
         }catch(error){
            console.log('Error uploading image', error);

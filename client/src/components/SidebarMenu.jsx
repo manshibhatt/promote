@@ -25,7 +25,7 @@ export default function SidebarMenu({ isOpen, onClose }) {
         <div className="h-full flex flex-col items-center justify-center gap-6 text-lg text-white">
           {currentUser ? (
             <button
-              onClick={() => navigate(`/profile/${currentUser._id}`)}
+              onClick={() => navigate(`/profile/${currentuser?._id}`)}
               className="text-left"
             >
               My Profile

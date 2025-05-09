@@ -16,7 +16,7 @@ export default function ProfileHeader({ user, business, isOwnProfile, isVerified
      
       const isCoverImage = imageToUpdate === 'cover'; 
       const response = await newRequest.put('/users/update-image', {
-        userId: user._id, 
+        userId: user?._id, 
         imageUrl,
         isCoverImage
       });
