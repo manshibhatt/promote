@@ -1,4 +1,3 @@
-// App.jsx
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
@@ -6,6 +5,9 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import VerifyBusiness from './pages/Business';
 import ProfilePage from './pages/ProfilePage';
+import PostPage from './pages/postPage';
+import MessageList from './pages/Conversation';
+import MessagesPage from './pages/Chat';
 
 function App() {
   const router= createBrowserRouter([
@@ -35,10 +37,25 @@ function App() {
     },
     {
       path:"/profile/:userId",
+      element:   <ProfilePage/>,
+    
+    },
+    {
+      path:"/postPage",
       element:(
-        <ProfilePage/>
+        <PostPage/>
       )
-    }
+    },
+    {
+      path:"/messages",
+      element:(
+        <MessageList/>
+      )
+    },
+      {
+        path: "/profile/:userId/chats", 
+        element: <MessagesPage />,
+      }
 
   ])
   return (

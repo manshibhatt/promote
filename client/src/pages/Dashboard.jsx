@@ -1,13 +1,82 @@
-import React, { useState } from 'react';
-import { Menu, Search } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Menu, Filter } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import PostFeed from '../components/Postfeed';
 import SidebarMenu from '../components/SidebarMenu';
 import { useNavigate } from 'react-router-dom';
+import debounce from 'lodash.debounce';
+import newRequest from '../utils/newRequest';
 
-
-export default function Dashboard() {
+export default function Dashboard() { 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [location, setLocation] = useState('');
+  const [tag, setTag] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await newRequest.get('/posts');
+        setPosts(res.data);
+      } catch (error) {
+        console.error('Failed to fetch posts:', error);
+      }
+    };
+    fetchPosts();
+  }, []);
+
+  
+const toggleLike = async (postId) => {
+  try {
+    const res = await newRequest.put(`/posts/${postId}/like`);
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId ? { ...post, likes: res.data.likes } : post
+      )
+    );
+  } catch (err) {
+    console.error("Like error:", err);
+  }
+};
+
+  const fetchSearchResults = async (q) => {
+    try {
+      const params = new URLSearchParams();
+      if (q) params.append('q', q);
+      if (location) params.append('location', location);
+      if (tag) params.append('tag', tag);
+
+      const res = await newRequest.get(`/search/posts?${params.toString()}`);
+      setSearchResults(res.data);
+    } catch (error) {
+      console.error('Search error:', error);
+    }
+  };
+
+  const debouncedSearch = useCallback(debounce(fetchSearchResults, 500), [location, tag]);
+
+  // 🔍 Trigger search when query changes
+  useEffect(() => {
+    if (query.trim() !== '') {
+      debouncedSearch(query);
+    } else if (location || tag) {
+      fetchSearchResults('');
+    } else {
+      setSearchResults([]);
+    }
+  }, [query, debouncedSearch]);
+
+  // ✅ NEW: Trigger search when location or tag changes
+  useEffect(() => {
+    if (query.trim() !== '') {
+      fetchSearchResults(query);
+    } else if (location || tag) {
+      fetchSearchResults('');
+    }
+  }, [location, tag]);
 
   return (
     <div className="flex justify-center bg-white h-screen overflow-hidden">
@@ -28,15 +97,38 @@ export default function Dashboard() {
               type="text"
               placeholder="Search..."
               className="w-full outline-none text-sm"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
-            <Search className="w-5 h-5 text-gray-500 ml-2" />
+            <Filter
+              className="w-5 h-5 text-gray-500 ml-2 cursor-pointer"
+              onClick={() => setShowFilters(!showFilters)}
+            />
           </div>
+
+          {/* Filters (conditionally visible) */}
+          {showFilters && (
+            <div className="mt-2 flex gap-2">
+              <input
+                type="text"
+                placeholder="Location"
+                className="w-full border border-gray-300 rounded-md px-3 py-1 text-sm"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Tag"
+                className="w-full border border-gray-300 rounded-md px-3 py-1 text-sm"
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Scrollable Posts */}
-        <PostFeed />
-
-     
+        {/* Posts Section */}
+        <PostFeed posts={query.trim() || location || tag ? searchResults : posts} onToggleLike={toggleLike}/>
       </div>
 
       {/* Sidebar */}
@@ -44,4 +136,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

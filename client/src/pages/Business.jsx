@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import newRequest from '../utils/newRequest';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const initialState = {
   name: '',
@@ -11,6 +12,8 @@ const initialState = {
   state: '',
   phone: '',
 };
+
+
 
 
 
@@ -30,6 +33,7 @@ const reducer = (state, action) => {
 
 export default function VerifyBusiness() {
   const [formData, dispatch] = useReducer(reducer, initialState);
+  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -46,8 +50,8 @@ export default function VerifyBusiness() {
     try{
         console.log(formData)
         const res= await newRequest.post("/business/",formData)
-        console.log(res)
-        navigate('/');
+        // console.log(res)
+        navigate(`/profile/${currentUser._id}`);
       }catch(err){
         console.log(err);
       }

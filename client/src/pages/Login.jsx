@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import newRequest from '../utils/newRequest';
 import { useEffect } from 'react';
+import {AuthContext} from "../context/AuthContext"
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export default function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const {updateUser} = useContext(AuthContext)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,8 +31,9 @@ export default function Login() {
       email: formData.email,
       password: formData.password,
     }, { withCredentials: true })
-    console.log(res.data)
-          localStorage.setItem("currentUser",JSON.stringify(res.data));
+    const { password, ...userWithoutPassword } = res.data;
+    // localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
+     updateUser(userWithoutPassword)
       navigate('/');
     }catch(err){
       console.log(err);

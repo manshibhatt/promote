@@ -20,34 +20,33 @@ export const verify = async (req, res) => {
         const authUserId = authData.user.id; // Supabase Auth User UUID
         console.log(authUserId)
 
-        // 🔹 Find Corresponding User in `users` Table
         const { data: userData, error: userError } = await supabase
             .from("users")
             .select("id")
-            .eq("auth_uid", authUserId) // Ensure `auth_uid` exists in your `users` table
+            .eq("auth_uid", authUserId) 
             .single();
 
         if (userError || !userData) {
             return res.status(400).json({ error: "User not found in database." });
         }
 
-        const user_id = userData.id; // Correct user_id for businesses table
+        const user_id = userData.id; 
 
-        // 🔹 Extract Business Data from Request Body
+       
         const { name, description, address, city, phone, state, zip_code } = req.body;
 
         if (!name || !address || !city || !phone || !state || !zip_code) {
             return res.status(400).json({ error: "Missing required fields." });
         }
 
-        // 🔹 Insert Business into `businesses` Table
+        
         const { data: businessData, error: insertError } = await supabase
             .from("businesses")
             .insert([
                 { user_id, name, description, address, city, phone, state, zip_code, is_verified: true }
             ])
             .select()
-            .single(); // Ensure it returns the inserted row
+            .single(); 
 
         if (insertError) {
             return res.status(500).json({ error: "Error inserting business.", details: insertError });

@@ -1,5 +1,6 @@
 import Business from "../models/business.model.js";
 import createError from "../utils/createError.js";
+import User from "../models/user.model.js";
 
 export const createBusiness = async (req, res, next) => {
     try {
@@ -7,8 +8,10 @@ export const createBusiness = async (req, res, next) => {
         ...req.body,
         ownerId: req.userId, 
       });
-      console.log(req.userId)
+      // console.log(req.userId)
       await newBusiness.save();
+      await User.findByIdAndUpdate(req.userId, { isVerified: true });
+      
       res.status(201).json({ message: "Business created successfully", business: newBusiness });
     } catch (err) {
       if (err.code === 11000) {

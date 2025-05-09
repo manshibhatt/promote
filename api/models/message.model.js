@@ -1,9 +1,27 @@
-const MessageSchema = new mongoose.Schema({
-    conversationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Conversation' },
-    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    content: String,
-    messageType: { type: String, enum: ['text', 'image', 'file'], default: 'text' },
-    createdAt: { type: Date, default: Date.now },
-    isRead: { type: Boolean, default: false }
-  });
-  
+import mongoose from 'mongoose';
+
+const MessageSchema = new mongoose.Schema(
+  {
+    conversationId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'Conversation',
+      required:true
+    },
+    senderId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'User',
+      required:true,
+    },
+    text:{
+      type:String,
+    },
+    postId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post',
+      default: null,
+    },
+  },
+  {timestamps: true}
+)
+
+export default mongoose.model('Message', MessageSchema); 
