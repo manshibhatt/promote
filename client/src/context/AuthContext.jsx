@@ -3,12 +3,12 @@ import {createContext, useEffect, useState} from "react";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(
+    const [currentUser, setcurrentUser] = useState(
         JSON.parse(localStorage.getItem("currentUser")) || null
     );
 
     const updateUser = (data)=>{
-        setCurrentUser(data);
+        setcurrentUser(data);
     }
 
     useEffect(()=>{

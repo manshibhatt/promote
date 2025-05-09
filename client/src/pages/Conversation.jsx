@@ -14,9 +14,9 @@ export default function MessageList() {
     const fetchContacts = async () => {
       if (!currentUser?._id) return;
       try {
-        const res = await newRequest.get(`/conversations/${currentuser?._id}`);
+        const res = await newRequest.get(`/conversations/${currentUser?._id}`);
         const receiverIds = res.data.map((conv) =>
-          conv.members.find((id) => id !== currentuser?._id)
+          conv.members.find((id) => id !== currentUser?._id)
         );
 
         const userPromises = receiverIds.map((id) =>
