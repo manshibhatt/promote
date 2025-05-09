@@ -8,6 +8,7 @@ const io = new Server({
 });
 
 let onlineUser = [];
+const PORT = process.env.PORT || 4000;
 
 const addUser = (userId, socketId) => {
   const userExits = onlineUser.find((user) => user.userId === userId);
@@ -43,4 +44,5 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen("4000");
+
+io.listen(PORT);

@@ -11,7 +11,8 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     // Initialize socket connection
-    const socketIo = io("http://localhost:4000");
+    // const socketIo = io("http://localhost:4000");
+    const socketIo = io("https://trutur.onrender.com");
 
     // Set socket to state
     setSocket(socketIo);
