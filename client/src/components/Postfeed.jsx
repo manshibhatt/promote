@@ -1,48 +1,21 @@
-
-
 import { UserCircle, MessageSquare, Share2, Heart } from 'lucide-react';
 import newRequest from '../utils/newRequest';
-import { useEffect, useState,useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { AuthContext } from '../context/AuthContext';
 
-export default function PostFeed({ posts, onToggleLike }) { 
-  // const [posts, setPosts] = useState([]);
-  const [commentStates, setCommentStates] = useState({}); 
-
+export default function PostFeed({ posts, onToggleLike }) {
+  const [commentStates, setCommentStates] = useState({});
   const { currentUser } = useContext(AuthContext);
-
-  const userId = currentUser?._id; 
-  
-
-  // useEffect(() => {
-  //   const fetchPosts = async () => { 
-  //     try {
-  //       const res = await newRequest.get("/posts/");
-  //       setPosts(res.data);
-  //     } catch (err) {
-  //       console.error("Failed to fetch posts:", err);
-  //     }
-  //   };
-
-  //   fetchPosts();
-  // }, []);
-
-  // const toggleLike = async (postId) => {
-  //   // console.log("button");
-  //   try {
-  //     const res = await newRequest.put(`/posts/${postId}/like`); 
-  //     // console.log(res.data)
-  //     setPosts(posts.map(post => 
-  //       post._id === postId ? { ...post, likes: res.data.likes } : post
-  //     ));
-  //   } catch (err) {
-  //     console.error("Like error:", err);
-  //   }
-  // };
+  const userId = currentUser?._id;
 
   const toggleCommentBox = (postId) => {
+    if (!currentUser) {
+      alert("Please log in to comment.");
+      return;
+    }
+
     setCommentStates(prev => ({
       ...prev,
       [postId]: { ...prev[postId], open: !prev[postId]?.open, comments: prev[postId]?.comments || [] }
@@ -66,8 +39,13 @@ export default function PostFeed({ posts, onToggleLike }) {
   };
 
   const handlePostComment = async (postId, commentText) => {
+    if (!currentUser) {
+      alert("Please log in to comment.");
+      return;
+    }
+
     try {
-      const res = await newRequest.post(`/posts/${postId}/comment`, {
+      await newRequest.post(`/posts/${postId}/comment`, {
         userId,
         text: commentText,
       });
@@ -77,12 +55,19 @@ export default function PostFeed({ posts, onToggleLike }) {
     }
   };
 
+  const handleLikeClick = (postId) => {
+    if (!currentUser) {
+      alert("Please log in to like posts.");
+      return;
+    }
+
+    onToggleLike(postId);
+  };
+
   return (
     <div className="flex-1 overflow-y-auto px-4 py-2 space-y-4 no-scrollbar">
       {Array.isArray(posts) && posts.map((post, index) => {
-      const liked = Array.isArray(post.likes) && post.likes.some(id => id && id.toString() === userId);
-
-
+        const liked = Array.isArray(post.likes) && post.likes.some(id => id && id.toString() === userId);
         const commentsOpen = commentStates[post._id]?.open;
 
         return (
@@ -119,7 +104,7 @@ export default function PostFeed({ posts, onToggleLike }) {
             {/* Action Buttons */}
             <div className="flex justify-around mt-2">
               <button
-                onClick={() => onToggleLike(post._id)}
+                onClick={() => handleLikeClick(post._id)}
                 className={clsx("flex items-center gap-1 px-3 py-1 rounded-md text-sm", {
                   "bg-gray-600 text-white": liked,
                   "bg-[#004d38] text-white": !liked,
@@ -188,4 +173,4 @@ function CommentInput({ onSubmit }) {
       </button>
     </form>
   );
-} 
+}

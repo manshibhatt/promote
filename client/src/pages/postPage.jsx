@@ -15,8 +15,8 @@ export default function CreatePost() {
 
   const handleCreatePost=async(user)=>{ 
         try{
-          console.log("click")
-          console.log(user)
+          // console.log("click")
+          // console.log(user)
           const response= await newRequest.post("/posts/",{
             userId:user?._id,
             description,
@@ -24,7 +24,7 @@ export default function CreatePost() {
             image:imageUrl,
             location
           }) 
-          console.log(response.data);
+          // console.log(response.data);
           navigate(`/profile/${user?._id}`);
 
         }catch(error){

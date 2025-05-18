@@ -39,7 +39,11 @@ export default function SidebarMenu({ isOpen, onClose }) {
             </button>
           )}
 
-          <button className="text-left" onClick={() => navigate('/messages')}>Messages</button>
+{currentUser && (
+  <button className="text-left" onClick={() => navigate('/messages')}>
+    Messages
+  </button>
+)}
           <button className="text-left">My Address</button>
           <button className="text-left">My Bookings</button>
         </div>

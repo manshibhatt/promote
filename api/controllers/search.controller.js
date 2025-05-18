@@ -14,9 +14,9 @@ export const searchUser = async(req, res)=>{
 
 export const searchPost= async (req, res) => {  
     const { q, location, tag } = req.query;
-    console.log('q:', q);
-    console.log('location:', location);
-    console.log('tag:', tag);
+    // console.log('q:', q);
+    // console.log('location:', location);
+    // console.log('tag:', tag);
     if (!q && !location && !tag) return res.json([]);
   
     const fullQueryRegex = new RegExp(q, "i");

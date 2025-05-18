@@ -61,8 +61,8 @@ export const deletePost = async (req, res, next) => {
 export const likePost = async (req, res, next) => {
     try {
       const post = await Post.findById(req.params.postId);
-      console.log("User from token:", req.userId);
-console.log("Post ID:", req.params.postId);
+//       console.log("User from token:", req.userId);
+// console.log("Post ID:", req.params.postId);
 
       if (!post) return next(createError(404, "Post not found"));
 

@@ -17,8 +17,8 @@ export const verify = async (req, res) => {
             return res.status(401).json({ error: "Unauthorized. Invalid token." });
         }
 
-        const authUserId = authData.user.id; // Supabase Auth User UUID
-        console.log(authUserId)
+        const authUserId = authData.user.id; 
+        // console.log(authUserId)
 
         const { data: userData, error: userError } = await supabase
             .from("users")

@@ -16,13 +16,19 @@ export default function UserProfile() {
   const [user, setUser] = useState(null); 
   const [business, setBusiness] = useState(null); 
   
-  const handleMessageClick = async () => {
-    
-      navigate('chats');
- 
+  const handleMessageClick = () => {
+    if (!currentUser) {
+      const confirmLogin = window.confirm("You are not logged in. Would you like to go to the login page?");
+      if (confirmLogin) {
+        navigate('/login');
+      }
+    } else {
+      navigate('/chats');
+    }
   };
+  
 
-  // Fetch user and business details
+  
   useEffect(() => { 
     const fetchUserAndBusiness = async () => {
       try { 
@@ -48,15 +54,13 @@ export default function UserProfile() {
   if (!user) return <div className="p-4 text-center">Loading profile...</div>;
 
   const isOwnProfile = loggedInUserId && userId.toString() === loggedInUserId.toString();
-  // const isOwnProfile=true;
 
-  // Print both IDs for debugging
-  console.log("User ID from URL:", userId); // userId from URL
-  console.log("Logged-in User ID:", loggedInUserId); // logged-in userId from AuthContext
+  // console.log("User ID from URL:", userId); 
+  // console.log("Logged-in User ID:", loggedInUserId); 
 
   return ( 
     <div className="max-w-2xl mx-auto bg-white min-h-screen">
-      {/* Profile Header */}
+      
       <ProfileHeader 
         user={user} 
         business={business} 

@@ -18,7 +18,7 @@ const verifyBusiness = async () => {
             { headers: { Authorization: token } }
         );
 
-        console.log("Business Verified:", response.data);
+        // console.log("Business Verified:", response.data);
     } catch (error) {
         console.error("Error verifying business:", error.response.data); 
     }

@@ -46,9 +46,9 @@ export default function VerifyBusiness() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Submitted Business Info:", formData);
+    // console.log("Submitted Business Info:", formData);
     try{
-        console.log(formData)
+        // console.log(formData)
         const res= await newRequest.post("/business/",formData)
         // console.log(res)
         navigate(`/profile/${currentUser?._id}`);

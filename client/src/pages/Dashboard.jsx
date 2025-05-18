@@ -58,7 +58,7 @@ const toggleLike = async (postId) => {
 
   const debouncedSearch = useCallback(debounce(fetchSearchResults, 500), [location, tag]);
 
-  // 🔍 Trigger search when query changes
+  
   useEffect(() => {
     if (query.trim() !== '') {
       debouncedSearch(query);
@@ -69,7 +69,7 @@ const toggleLike = async (postId) => {
     }
   }, [query, debouncedSearch]);
 
-  // ✅ NEW: Trigger search when location or tag changes
+  
   useEffect(() => {
     if (query.trim() !== '') {
       fetchSearchResults(query);
@@ -106,7 +106,7 @@ const toggleLike = async (postId) => {
             />
           </div>
 
-          {/* Filters (conditionally visible) */}
+          
           {showFilters && (
             <div className="mt-2 flex gap-2">
               <input

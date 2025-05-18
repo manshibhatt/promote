@@ -14,29 +14,29 @@ export default function Login() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const {updateUser} = useContext(AuthContext)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(null);
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-     
+    try {
+      const res = await newRequest.post("/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      }, { withCredentials: true });
 
-    try{
-      // console.log(formData)
-    const res= await newRequest.post("/auth/login",{
-      email: formData.email,
-      password: formData.password,
-    }, { withCredentials: true })
-    const { password, ...userWithoutPassword } = res.data;
-    // localStorage.setItem("currentUser", JSON.stringify(userWithoutPassword));
-     updateUser(userWithoutPassword)
+      const { password, ...userWithoutPassword } = res.data;
+      updateUser(userWithoutPassword);
       navigate('/');
-    }catch(err){
-      console.log(err);
+    } catch (err) {
+      const errorMessage = err.response.data || "Something went wrong!";
+      setError(errorMessage); 
     }
   };
 
@@ -79,6 +79,8 @@ export default function Login() {
           </button>
         </div>
 
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+
         <button
           type="submit"
           className="w-full bg-[#004d38] text-white py-2 rounded hover:opacity-90"
@@ -100,3 +102,4 @@ export default function Login() {
     </div>
   );
 }
+  ; 
