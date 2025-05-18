@@ -4,7 +4,8 @@ import { Server } from "socket.io";
 const io = new Server({
   cors: {
     
-    origin: "https://fronend-t.onrender.com",
+    // origin: "https://fronend-t.onrender.com",
+    origin: "https://trutur.vercel.app",
     // origin: "http://localhost:5173",
   },
 });
