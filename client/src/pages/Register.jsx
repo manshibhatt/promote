@@ -28,7 +28,7 @@ export default function Register() {
     try {
       const res = await newRequest.post("/auth/register", formData);
       console.log(res);
-      navigate('/');
+      navigate('/login');
     } catch (err) {
       console.log(err);
       const msg = err?.response?.data || "Something went wrong. Please try again.";

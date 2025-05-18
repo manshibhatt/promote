@@ -26,35 +26,38 @@ export const register = async (req, res, next) => {
   }
 };
  
-export const login = async (req, res, next) => { 
+export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    const age = 1000 * 60 * 60 * 24 * 7;
-
-    if (!user) return next(createError(404, "User not found!"));    
-
+    const age = 1000 * 60 * 60 * 24 * 7; // 7 days in milliseconds
+    
+    if (!user) return next(createError(404, "User not found!"));
+    
     const isCorrect = bcrypt.compareSync(req.body.password, user.password);
     if (!isCorrect)
       return next(createError(400, "Wrong password or email!"));
-
+    
     const token = jwt.sign(
       {
         id: user?._id,
       },
       process.env.JWT_KEY,
-      { expiresIn: age } 
+      { expiresIn: age }
     );
-
+    
     const { password, ...info } = user._doc;
+    
+    // Modified cookie settings to properly work in cross-origin deployments
     res
       .cookie("accessToken", token, {
-        sameSite: 'None' ,
+        sameSite: 'None',
         httpOnly: true,
-        secure:true,
-        maxAge: age
-      }) 
+        secure: true,
+        maxAge: age,
+        path: '/' 
+      })
       .status(200)
-      .send(info); 
+      .send(info);
   } catch (err) {
     next(err);
   }

@@ -23,7 +23,7 @@ export default function UserProfile() {
         navigate('/login');
       }
     } else {
-      navigate('/chats');
+      navigate('/profile/:userId/chats');
     }
   };
   
