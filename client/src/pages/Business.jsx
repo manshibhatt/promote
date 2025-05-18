@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import newRequest from '../utils/newRequest';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { useContext } from 'react';
 
 const initialState = {
   name: '',
