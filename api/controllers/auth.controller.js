@@ -29,7 +29,7 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    const age = 1000 * 60 * 60 * 24 * 7; // 7 days in milliseconds
+    // const age = 1000 * 60 * 60 * 24 * 7; // 7 days in milliseconds
     
     if (!user) return next(createError(404, "User not found!"));
     
@@ -53,8 +53,8 @@ export const login = async (req, res, next) => {
         sameSite: 'none' ,
         httpOnly: true,
         secure: true,
-        domain: 'promote-backend.onrender.com',
-        maxAge: age,
+        // domain: 'promote-backend.onrender.com',
+
          
       })
       .status(200)
