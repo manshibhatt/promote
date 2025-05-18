@@ -50,11 +50,12 @@ export const login = async (req, res, next) => {
     // Modified cookie settings to properly work in cross-origin deployments
     res
       .cookie("accessToken", token, {
-        sameSite: 'None',
+        sameSite: 'none' ,
         httpOnly: true,
         secure: true,
+        domain: 'promote-backend.onrender.com',
         maxAge: age,
-        path: '/' 
+         
       })
       .status(200)
       .send(info);
