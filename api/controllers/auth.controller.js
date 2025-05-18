@@ -54,7 +54,7 @@ export const login = async (req, res, next) => {
         maxAge: age
       }) 
       .status(200)
-      .send(info);
+      .send(info); 
   } catch (err) {
     next(err);
   }
