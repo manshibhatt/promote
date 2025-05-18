@@ -45,9 +45,9 @@ const toggleLike = async (postId) => {
   const fetchSearchResults = async (q) => {
     try {
       const params = new URLSearchParams();
-      if (q) params.append('q', q);
-      if (location) params.append('location', location);
-      if (tag) params.append('tag', tag);
+      // if (q) params.append('q', q);
+      // if (location) params.append('location', location);
+      // if (tag) params.append('tag', tag);
 
       const res = await newRequest.get(`/search/posts?${params.toString()}`);
       setSearchResults(res.data);

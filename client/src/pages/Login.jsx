@@ -32,7 +32,7 @@ export default function Login() {
       }, { withCredentials: true });
 
       const { password, ...userWithoutPassword } = res.data;
-      updateUser(userWithoutPassword);
+      updateUser(userWithoutPassword); 
       navigate('/');
     } catch (err) {
       const errorMessage = err.response.data || "Something went wrong!";
