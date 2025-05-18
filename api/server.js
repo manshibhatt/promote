@@ -33,8 +33,8 @@ app.use(cookieParser());
 
 
 app.use(cors({
-  // origin: "https://fronend-t.onrender.com", 
-  origin: "https://trutur.vercel.app", 
+  origin: "https://fronend-t.onrender.com", 
+  // origin: "https://trutur.vercel.app", 
   // origin: "http://localhost:5173", 
   credentials: true 
 }));

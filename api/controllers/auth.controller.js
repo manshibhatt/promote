@@ -53,7 +53,7 @@ export const login = async (req, res, next) => {
         sameSite: 'none' ,
         httpOnly: true,
         secure: true,
-        // domain: 'promote-backend.onrender.com',
+        domain: 'promote-backend.onrender.com',
 
          
       })
