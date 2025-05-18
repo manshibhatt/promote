@@ -33,7 +33,8 @@ app.use(cookieParser());
 
 
 app.use(cors({
-  origin: "https://fronend-t.onrender.com", 
+  origin: "https://promote-s12l.onrender.com", 
+  // origin: "https://fronend-t.onrender.com", 
   // origin: "http://localhost:5173", 
   credentials: true 
 }));
