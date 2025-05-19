@@ -36,7 +36,8 @@ app.use(cors({
   origin: "https://fronend-t.onrender.com", 
   // origin: "https://trutur.vercel.app", 
   // origin: "http://localhost:5173", 
-  credentials: true 
+  credentials: true ,
+  optionsSuccessStatus: 200
 }));
  
 app.use("/api/auth", authRoute); 
